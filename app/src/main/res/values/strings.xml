@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Projectb</string>
+    <string name="textview">Dan is learning Android</string>
+    <string name="button">Update the TextView</string>
+    <string name="hint">A Name</string>
+    <string name="action_settings">Settings</string>
+</resources>
