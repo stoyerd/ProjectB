@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Commit change
+
         // 1. Access the TextView defined in layout XML
         // and then set its text.
         mainTextView = (TextView) findViewById(R.id.main_textview);
