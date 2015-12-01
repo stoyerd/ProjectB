@@ -7,4 +7,13 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <!-- Manual Entry UPC Menu Item -->
+    <item
+        android:id="@+id/action_manual_upc"
+        android:orderInCategory="100"
+        android:title="@string/action_manual_upc"
+        app:showAsAction="never" />
+
+    <!-- Add additional menu items here. -->
 </menu>
