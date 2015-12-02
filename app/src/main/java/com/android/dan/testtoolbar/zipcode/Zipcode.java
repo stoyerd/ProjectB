@@ -11,7 +11,6 @@ public class Zipcode {
 
     private int _id;
     private String _city;
-    private int _quantity;
     private Map <String, List<String>> _standards;
 
     public Zipcode (int id, String city, Map<String, List<String>> standards) {
@@ -36,14 +35,6 @@ public class Zipcode {
 
     public void setCity(String _city) {
         this._city = _city;
-    }
-
-    public int getQuantity() {
-        return _quantity;
-    }
-
-    public void setQuantity(int _quantity) {
-        this._quantity = _quantity;
     }
 
     public Map<String, List<String>> getStandards() {
