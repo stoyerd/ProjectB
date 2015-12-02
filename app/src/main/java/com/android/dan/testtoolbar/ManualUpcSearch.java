@@ -78,6 +78,8 @@ public class ManualUpcSearch extends AppCompatActivity {
         // Create request url.
         String requestUrl = apiUrl + "/" + apiKey + "/" + code;
 
+        Log.d("requestUrl", requestUrl);
+
         // Make request
         stringRequest = new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
             @Override

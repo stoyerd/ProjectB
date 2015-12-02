@@ -41,7 +41,7 @@ public class UpcDatabaseXmlParser {
         if (name.equals("output")) {                            // Only start parsing data at "output" tag.
             item = readItem(parser);
         }
-
+        Log.v("Attribute", name);
         return item;
     }
 
@@ -52,6 +52,8 @@ public class UpcDatabaseXmlParser {
      */
     private Recyclable readItem(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "output");
+
+        Log.d("Testing", "Here");
 
         // Initialize local variables to be set and used when constructing the returned recyclable item.
         int number = 0;
