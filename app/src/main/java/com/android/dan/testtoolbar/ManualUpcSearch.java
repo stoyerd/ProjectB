@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +22,14 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.w3c.dom.Text;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class ManualUpcSearch extends AppCompatActivity {
 
@@ -43,17 +52,8 @@ public class ManualUpcSearch extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);                       // Initialize an HTTP request queue.
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -61,17 +61,28 @@ public class ManualUpcSearch extends AppCompatActivity {
 
     /* Manual UPC Lookup home. */
     public void upcLookup(View view) {
-        String url = getString(R.string.upc_lookup_uri);    // Get API url.
+        String url = getString(R.string.upc_lookup_uri);            // Get API url.
         url = url + "/xml/7b0ef3fc28082d0c1a3a8d9cdce71730/4029764001807";
-        Log.d("API URL", url);
+
 
         // Make request
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-                public void onResponse(String response) {
-                    Log.d("Response", response);
+            public void onResponse(String response) {           // Request response event listener.
+                InputStream stream = new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8));   // Create an input stream that the parser can understand.
+
+                UpcDatabaseXmlParser parser = new UpcDatabaseXmlParser();                                   // Instantiate the parser
+
+                try {
+                    parser.parse(stream);
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-        }, new Response.ErrorListener() {
+            }
+
+        }, new Response.ErrorListener() {                           // Error response event listener.
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR!", "Error doing something");
@@ -81,6 +92,7 @@ public class ManualUpcSearch extends AppCompatActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);           // This actually sends the request.
     }
+
 
     /* Override onStop() */
     @Override
