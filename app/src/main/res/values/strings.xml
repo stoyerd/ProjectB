@@ -8,4 +8,6 @@
     <!-- Manual UPC Search Strings. -->
     <string name="title_activity_manual_upc_search">ManualUpcSearch</string>
     <string name="action_manual_upc">Manual UPC Search</string>
+    <string name="upc_code_hint">UPC Code</string>
+    <string name="upc_lookup_uri">http://www.upcdatabase.org</string>
 </resources>

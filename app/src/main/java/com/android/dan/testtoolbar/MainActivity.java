@@ -1,5 +1,6 @@
 package com.android.dan.testtoolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -62,13 +63,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainListView.setAdapter(mArrayAdapter);
 
         // 5. Set this activity to react to list items being pressed.
-//        mainListView.setOnItemClickListener(this);
+        mainListView.setOnItemClickListener(this);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_manual_upc);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                Snackbar.make(view, "Manu", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 //            }
 //        });
@@ -91,6 +92,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.action_manual_upc) {
+            Log.v("Clicked: ", + R.id.action_manual_upc + " option.");
+            Intent intent = new Intent(this, ManualUpcSearch.class);
+            startActivity(intent);
             return true;
         }
 
