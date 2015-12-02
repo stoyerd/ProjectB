@@ -49,7 +49,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     //dloughlin(TODO):make ZipCode Class
     public Zipcode queryZipCode(int zipcodeID) {
 
-        String query = "Select * FROM " + TABLE_STANDARDS + " WHERE " + ZIP_CODE + " = \"" + zipcode + "\"";
+        String query = "Select * FROM " + TABLE_STANDARDS + " WHERE " + ZIP_CODE + " = \"" + zipcodeID + "\"";
 
         SQLiteDatabase database = this.getWritableDatabase();
 
