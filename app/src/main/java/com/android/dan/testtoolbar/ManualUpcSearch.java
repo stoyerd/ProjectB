@@ -62,13 +62,14 @@ public class ManualUpcSearch extends AppCompatActivity {
     /* Manual UPC Lookup home. */
     public void upcLookup(View view) {
         String url = getString(R.string.upc_lookup_uri);    // Get API url.
+        url = url + "/xml/7b0ef3fc28082d0c1a3a8d9cdce71730/4029764001807";
         Log.d("API URL", url);
 
         // Make request
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
                 public void onResponse(String response) {
-                    Log.d("Response", response.substring(0, 500));
+                    Log.d("Response", response);
                 }
         }, new Response.ErrorListener() {
             @Override

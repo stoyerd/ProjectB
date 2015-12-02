@@ -9,7 +9,7 @@
     <string name="title_activity_manual_upc_search">Manual Upc Search</string>
     <string name="action_manual_upc">Manual UPC Search</string>
     <string name="upc_code_hint">UPC Code</string>
-    <string name="upc_lookup_uri">http://www.upcdatabase.org</string>
+    <string name="upc_lookup_uri">http://api.upcdatabase.org</string>
 
     <!-- Generic form tags -->
     <string name="submit">Submit</string>
