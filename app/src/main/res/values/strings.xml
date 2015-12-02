@@ -1,13 +1,16 @@
 <resources>
-    <string name="app_name">Story3</string>
+    <string name="app_name">Will It Recycle?</string>
     <string name="textview">Dan is learning Android</string>
     <string name="button">Update the TextView</string>
     <string name="hint">A Name</string>
     <string name="action_settings">Settings</string>
 
     <!-- Manual UPC Search Strings. -->
-    <string name="title_activity_manual_upc_search">ManualUpcSearch</string>
+    <string name="title_activity_manual_upc_search">Manual Upc Search</string>
     <string name="action_manual_upc">Manual UPC Search</string>
     <string name="upc_code_hint">UPC Code</string>
     <string name="upc_lookup_uri">http://www.upcdatabase.org</string>
+
+    <!-- Generic form tags -->
+    <string name="submit">Submit</string>
 </resources>
