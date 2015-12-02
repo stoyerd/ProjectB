@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.android.dan.testtoolbar.zipcode.Zipcode;
+
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_STANDARDS = "all_standards";
@@ -45,28 +47,31 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     //dloughlin(TODO):make ZipCode Class
-    public ZipCodeClassName queryZipCode(String zipcode_string) {
+    public Zipcode queryZipCode(int zipcodeID) {
 
-            String query = "Select * FROM " + TABLE_STANDARDS + " WHERE " + ZIP_CODE + " = \"" + zipcode_string + "\"";
+        String query = "Select * FROM " + TABLE_STANDARDS + " WHERE " + ZIP_CODE + " = \"" + zipcode + "\"";
 
-            SQLiteDatabase database = this.getWritableDatabase();
+        SQLiteDatabase database = this.getWritableDatabase();
 
-            Cursor cursor = database.rawQuery(query, null);
+        Cursor cursor = database.rawQuery(query, null);
 
-            //dloughlin(TODO): Change the below to something that will work with zip code class
-            //ZipCodeClassName zipcode = new ZipCodeClassName();
+        //dloughlin(TODO): Change the below to something that will work with zip code class
+        //ZipCodeClassName zipcode = new ZipCodeClassName();
 
-            if (cursor.moveToFirst()) {
-                cursor.moveToFirst();
-                zipcode.setID(Integer.parseInt(cursor.getString(0)));
-                zipcode.setCity(cursor.getString(1));
-                zipcode.setStandards(cursor.getString(1));
-                cursor.close();
-            } else {
-                zipcode = null;
-            }
+        // dstoyer TODO: replace the null arguments with valid info.
+        Zipcode zipcode = new Zipcode(zipcodeID, null, null);
 
-            database.close();
-            return zipcode;
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            zipcode.setID(Integer.parseInt(cursor.getString(0)));
+            zipcode.setCity(cursor.getString(1));
+//            zipcode.setStandards(cursor.getString(1));
+            cursor.close();
+        } else {
+            zipcode = null;
+        }
+
+        database.close();
+        return zipcode;
     }
 }
