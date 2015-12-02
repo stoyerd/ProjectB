@@ -7,13 +7,16 @@ public class Recyclable {
     private int number;
     private String itemName;
     private String description;
-    private float averagePrice;
+    private double averagePrice;
 
     Recyclable() {
-
+        setNumber(0);
+        setItemName("");
+        setDescription("");
+        setAveragePrice(0.00);
     }
 
-    Recyclable(int startNum, String startName, String startDesc, float startPrice) {
+    Recyclable(int startNum, String startName, String startDesc, double startPrice) {
         setNumber(startNum);
         setItemName(startName);
         setDescription(startDesc);
@@ -44,11 +47,11 @@ public class Recyclable {
         description = text;
     }
 
-    public float getAveragePrice() {
+    public double getAveragePrice() {
         return averagePrice;
     }
 
-    public void setAveragePrice(float val) {
+    public void setAveragePrice(double val) {
         averagePrice = val;
     }
 }
