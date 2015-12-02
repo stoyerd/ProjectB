@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ public class ManualUpcSearch extends AppCompatActivity {
     private GoogleApiClient client;
     RequestQueue queue;             // Where requests go to be made.
     StringRequest stringRequest;    // Actual request.
+    EditText mUpcCode;                  // Upc code.
 
 
     @Override
@@ -59,22 +61,34 @@ public class ManualUpcSearch extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    /* Manual UPC Lookup home. */
+    /**
+     * Manual UPC Lookup home.
+     *
+     * Sample upc database API url: "http://api.upcdatabase.org/xml/7b0ef3fc28082d0c1a3a8d9cdce71730/4029764001807"
+     */
     public void upcLookup(View view) {
-        String url = getString(R.string.upc_lookup_uri);            // Get API url.
-        url = url + "/xml/7b0ef3fc28082d0c1a3a8d9cdce71730/4029764001807";
+        EditText mUpcCode = (EditText) findViewById(R.id.upc_code);
 
+        String code = mUpcCode.getText().toString();                                // Get UPC code entered by user.
+        String apiUrl = getString(R.string.upc_lookup_uri);                         // Get base API url.
+        String apiKey = getString(R.string.upc_lookup_api_key);                     // Get API key.
+
+//        url = url + "/xml/7b0ef3fc28082d0c1a3a8d9cdce71730/4029764001807";   TODO: This url was to find 'club mate' soda, use in test case.
+
+        // Create request url.
+        String requestUrl = apiUrl + "/" + apiKey + "/" + code;
 
         // Make request
-        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {           // Request response event listener.
+            public void onResponse(String response) {                               // Request response event listener.
                 InputStream stream = new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8));   // Create an input stream that the parser can understand.
 
                 UpcDatabaseXmlParser parser = new UpcDatabaseXmlParser();                                   // Instantiate the parser
 
                 try {
                     parser.parse(stream);
+
                 } catch (XmlPullParserException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -82,7 +96,7 @@ public class ManualUpcSearch extends AppCompatActivity {
                 }
             }
 
-        }, new Response.ErrorListener() {                           // Error response event listener.
+        }, new Response.ErrorListener() {                                           // Error response event listener.
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR!", "Error doing something");
