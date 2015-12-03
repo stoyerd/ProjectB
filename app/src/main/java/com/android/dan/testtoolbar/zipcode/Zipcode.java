@@ -15,9 +15,9 @@ public class Zipcode {
 
     public Zipcode (int id, String city, Map<String, List<String>> standards) {
 
-        this._id = id;
+        this._id = id;         // Zipcode will be used as the id
         this._city = city;
-        this._standards = new HashMap<String, List<String>>();
+        this._standards = new HashMap<String, List<String>>();   // eg. plastic, <bottle, milk jug>
 
     }
 

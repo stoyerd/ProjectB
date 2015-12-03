@@ -46,8 +46,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    //dloughlin(TODO):make ZipCode Class
-    public Zipcode queryZipCode(int zipcodeID) {
+    // We are querying the db using a zipcode and returning
+    // the city and recycling standards.
+    public Zipcode queryZipCode(String zipcodeID) {
 
         String query = "Select * FROM " + TABLE_STANDARDS + " WHERE " + ZIP_CODE + " = \"" + zipcodeID + "\"";
 
@@ -55,21 +56,23 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         Cursor cursor = database.rawQuery(query, null);
 
-        //dloughlin(TODO): Change the below to something that will work with zip code class
-        //ZipCodeClassName zipcode = new ZipCodeClassName();
 
         // dstoyer TODO: replace the null arguments with valid info.
         Zipcode zipcode = new Zipcode(zipcodeID, null, null);
 
-        if (cursor.moveToFirst()) {
+        // Do we have 1 row
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             zipcode.setID(Integer.parseInt(cursor.getString(0)));
             zipcode.setCity(cursor.getString(1));
-//            zipcode.setStandards(cursor.getString(1));
+            zipcode.setStandards(cursor.getString(1));
             cursor.close();
         } else {
+            //dloughlin(TODO): if not foundm lets display something different to the user
             zipcode = null;
         }
+
+
 
         database.close();
         return zipcode;
