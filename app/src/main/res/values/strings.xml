@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Story3</string>
-    <string name="textview">Dan is learning Android</string>
-    <string name="button">Update the TextView</string>
-    <string name="hint">A Name</string>
+    <string name="app_name">Recycling Standards</string>
+    <string name="textview">Enter a zipcode</string>
+    <string name="button">Search</string>
+    <string name="hint">12345</string>
     <string name="action_settings">Settings</string>
 </resources>

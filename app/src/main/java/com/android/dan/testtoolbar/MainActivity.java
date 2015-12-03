@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 1. Access the TextView defined in layout XML
         // and then set its text.
         mainTextView = (TextView) findViewById(R.id.main_textview);
-        mainTextView.setText("Set in Java");
+        //mainTextView.setText("Set in Java");
 
         // 2. Access the Button defined in layout xml
         // and listen for it here.
@@ -101,12 +101,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         // Take what was typed into EditText and use in TextView
-        mainTextView.setText(mainEditText.getText().toString()
-                + " is learning Android development!");
+        //mainTextView.setText(mainEditText.getText().toString()
+        //        + " is learning Android development!");
 
         // Also add that value to the list shown in the ListView
         mNameList.add(mainEditText.getText().toString());
         mArrayAdapter.notifyDataSetChanged();
+        addZipcode(v);
 
     }
 
@@ -116,6 +117,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Log the item's position and contents
         // to the console in debug
         Log.d("ooh android", position + ": " + mNameList.get(position));
+
+    }
+
+    public void addZipcode(View view) {
+        //dloughlin TODO create db
+        MySQLiteHelper db = new MySQLiteHelper(null);
+        db.addDummyZipcode(Integer.parseInt(mainEditText.getText().toString()));
+
 
     }
 }

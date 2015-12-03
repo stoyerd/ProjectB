@@ -2,6 +2,7 @@ package com.android.dan.testtoolbar;
 // Ref: http://www.vogella.com/tutorials/AndroidSQLite/article.html#databasetutorial_database
 // Used the above as a guide for working with SQLite on Android
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,10 +25,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "recycle.db";
     private static final int DATABASE_VERSION = 1;
 
-    
-
-    // Create the database
-    //dloughlin(TODO): we need to add categories for recycling (eg. plastic, paper, etc)
     private static final String DATABASE_CREATE = "create table "
             + TABLE_STANDARDS + "(" + ZIP_CODE
             + " integer primary key, " + CITY
@@ -85,6 +82,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         finally {
             database.close();
         }
+    }
+
+    // For seeding a database and testing
+    public void addDummyZipcode(int zipcodeID) {
+        ContentValues values = new ContentValues();
+        values.put(ZIP_CODE, zipcodeID);
+        values.put(CITY, "denver");
+        values.put(RECYCLING_STANDARDS, "toxic waste");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_STANDARDS, null, values);
+        db.close();
     }
 
     // dstoyer TODO make method for parsing the standards. The object needs to be a Map<String, List<String>
