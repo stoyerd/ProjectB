@@ -10,6 +10,10 @@ import android.util.Log;
 
 import com.android.dan.testtoolbar.zipcode.Zipcode;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_STANDARDS = "all_standards";
@@ -19,6 +23,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "recycle.db";
     private static final int DATABASE_VERSION = 1;
+
+    
 
     // Create the database
     //dloughlin(TODO): we need to add categories for recycling (eg. plastic, paper, etc)
@@ -56,25 +62,40 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         Cursor cursor = database.rawQuery(query, null);
 
-
-        // dstoyer TODO: replace the null arguments with valid info.
-        Zipcode zipcode = new Zipcode(zipcodeID, null, null);
-
-        // Do we have 1 row
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            zipcode.setID(Integer.parseInt(cursor.getString(0)));
-            zipcode.setCity(cursor.getString(1));
-            zipcode.setStandards(cursor.getString(1));
-            cursor.close();
-        } else {
-            //dloughlin(TODO): if not foundm lets display something different to the user
-            zipcode = null;
+        try {
+            // Do we have 1 row
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                // dstoyer TODO We need to parse the standards into the item type and the list of products.
+                // the object needs to be a Map<String, List<String>
+                Map<String, List<String>> standards = new HashMap<>();
+                cursor.getString(2);
+                Zipcode zipcode = new Zipcode(
+                        Integer.parseInt(zipcodeID),
+                        cursor.getString(1),
+                        standards
+                        );
+                cursor.close();
+                return zipcode;
+            } else {
+                //dloughlin(TODO): if not foundm lets display something different to the user
+                return null;
+            }
         }
-
-
-
-        database.close();
-        return zipcode;
+        finally {
+            database.close();
+        }
     }
+
+    // dstoyer TODO make method for parsing the standards. The object needs to be a Map<String, List<String>
+
 }
+
+// List<String> sp
+// sp.add(product);
+
+// save key name in variable
+// build list
+// put in the map.
+
+// map.put(key, sp)
