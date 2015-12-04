@@ -96,6 +96,53 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // For deleting a zipcode from database and testing
+    public boolean deleteDummyZipcode(int zipcodeID) {
+        boolean result = false;
+        String query = "Select * FROM " + TABLE_STANDARDS + " WHERE "
+                + ZIP_CODE + " = \"" + zipcodeID + "\"";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+        //dloughlin TODO instantiate zipcode object here
+
+        if (cursor.moveToFirst()) {
+            db.delete(TABLE_STANDARDS, ZIP_CODE + " = ?",
+                    new String[] { String.valueOf(cursor.getString(0)) });
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
+
+    //dloughlin TODO this will be a Zipcode object return type someotherday
+    public int findZipcode(int zipcodeID) {
+        String query = "Select * FROM " + TABLE_STANDARDS + " WHERE "
+                + ZIP_CODE + " = \"" + zipcodeID + "\"";
+
+        int result = -1;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+        //dloughlin TODO instantiate zipcode object here
+        if (cursor.moveToFirst()) {
+            // cursor.moveToFirst();
+            // product.setID(Integer.parseInt(cursor.getString(0)));
+            // product.setProductName(cursor.getString(1));
+            // product.setQuantity(Integer.parseInt(cursor.getString(2)));
+            result = cursor.getInt(0);
+            cursor.close();
+        } else {
+            // product = null;
+        }
+        db.close();
+        return result;
+
+    }
+
     // dstoyer TODO make method for parsing the standards. The object needs to be a Map<String, List<String>
 
 }

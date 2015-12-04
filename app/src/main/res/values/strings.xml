@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Recycling Standards</string>
     <string name="textview">Enter a zipcode</string>
-    <string name="button">Search</string>
+    <string name="add_button">Add</string>
+    <string name="delete_button">Delete</string>
+    <string name="search_button">Search</string>
     <string name="hint">12345</string>
     <string name="action_settings">Settings</string>
 </resources>

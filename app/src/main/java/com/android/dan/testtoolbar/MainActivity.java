@@ -1,8 +1,6 @@
 package com.android.dan.testtoolbar;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,12 +19,14 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener {
 
-    TextView mainTextView;
-    Button mainButton;
-    EditText mainEditText;
-    ListView mainListView;
-    ArrayAdapter mArrayAdapter;
-    ArrayList mNameList = new ArrayList();
+    private TextView mainTextView;
+    private Button addButton;
+    private Button deleteButton;
+    private Button searchButton;
+    private EditText mainEditText;
+    private ListView mainListView;
+    private ArrayAdapter mArrayAdapter;
+    private ArrayList mCategoryList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +40,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 1. Access the TextView defined in layout XML
         // and then set its text.
         mainTextView = (TextView) findViewById(R.id.main_textview);
-        //mainTextView.setText("Set in Java");
 
         // 2. Access the Button defined in layout xml
         // and listen for it here.
-        mainButton = (Button) findViewById(R.id.main_button);
-        mainButton.setOnClickListener(this);
+        addButton = (Button) findViewById(R.id.add_button);
+        addButton.setOnClickListener(this);
+
+        deleteButton = (Button) findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(this);
+
+        searchButton = (Button) findViewById(R.id.search_button);
+        searchButton.setOnClickListener(this);
 
         // 3. Access the EditText defined in layout xml
         mainEditText = (EditText) findViewById(R.id.main_edittext);
@@ -56,25 +61,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Create an array adapter for the ListView
         mArrayAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,
-                mNameList
+                mCategoryList
         );
         // Set the ListView to use the ArrayAdapter
         mainListView.setAdapter(mArrayAdapter);
 
-        // 5. Set this activity to react to list items being pressed.
-//        mainListView.setOnItemClickListener(this);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
-// dloughlin test 4
-    // Dan Stoyer comment another test
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -105,10 +98,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //        + " is learning Android development!");
 
         // Also add that value to the list shown in the ListView
-        mNameList.add(mainEditText.getText().toString());
-        mArrayAdapter.notifyDataSetChanged();
-        addZipcode(v);
+        if(v == addButton) {
+            mCategoryList.add(mainEditText.getText().toString());
+            mArrayAdapter.notifyDataSetChanged();
+            addZipcode(v);
+        }
+        if(v == deleteButton) {
+            mCategoryList.remove(mainEditText.getText().toString());
+            deleteZipcode(v);
+        }
 
+        if(v == searchButton) {
+            mCategoryList.add(mainEditText.getText().toString());
+            int result;
+            result = findZipcode(v);
+            if(result != -1) {
+                mainTextView.setText("We found your zipcode!");
+            } else {
+                mainTextView.setText("We did not found your zipcode!");
+            }
+        }
     }
 
     @Override
@@ -116,15 +125,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Log the item's position and contents
         // to the console in debug
-        Log.d("ooh android", position + ": " + mNameList.get(position));
+        Log.d("ooh android", position + ": " + mCategoryList.get(position));
 
     }
 
     public void addZipcode(View view) {
-        //dloughlin TODO create db
-        MySQLiteHelper db = new MySQLiteHelper(null);
+        MySQLiteHelper db = new MySQLiteHelper(this);
         db.addDummyZipcode(Integer.parseInt(mainEditText.getText().toString()));
+    }
 
-
+    public void deleteZipcode(View view) {
+        MySQLiteHelper db = new MySQLiteHelper(this);
+        db.deleteDummyZipcode(Integer.parseInt(mainEditText.getText().toString()));
+    }
+    //dloughlin TODO this will be a Zipcode object return type someotherday
+    public int findZipcode(View view) {
+        MySQLiteHelper db = new MySQLiteHelper(this);
+        return db.findZipcode(Integer.parseInt(mainEditText.getText().toString()));
     }
 }

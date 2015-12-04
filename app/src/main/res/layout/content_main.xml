@@ -38,14 +38,32 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/main_button"
+            android:id="@+id/add_button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/add_button"/>
+
+        <Button
+            android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/button"/>
+            android:layout_marginLeft="5dp"
+            android:text="@string/delete_button"/>
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/search_button"/>
 
     </LinearLayout>
+
+
 
     <ListView
         android:layout_width="wrap_content"
