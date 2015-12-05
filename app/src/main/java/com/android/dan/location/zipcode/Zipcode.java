@@ -1,6 +1,5 @@
-package com.android.dan.testtoolbar.zipcode;
+package com.android.dan.location.zipcode;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

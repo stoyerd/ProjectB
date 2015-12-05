@@ -1,4 +1,4 @@
-package com.android.dan.testtoolbar;
+package com.android.dan.location;
 // Ref: http://www.vogella.com/tutorials/AndroidSQLite/article.html#databasetutorial_database
 // Used the above as a guide for working with SQLite on Android
 
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.android.dan.testtoolbar.zipcode.Zipcode;
+import com.android.dan.location.zipcode.Zipcode;
 
 import java.util.HashMap;
 import java.util.List;

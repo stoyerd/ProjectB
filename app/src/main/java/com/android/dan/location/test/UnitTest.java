@@ -1,8 +1,8 @@
-package com.android.dan.testtoolbar.test;
+package com.android.dan.location.test;
 
 import android.test.InstrumentationTestCase;
 
-import com.android.dan.testtoolbar.zipcode.Zipcode;
+import com.android.dan.location.zipcode.Zipcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,6 @@ public class UnitTest extends InstrumentationTestCase{
         items.put("glass", glassItems);
 
         Zipcode zip = new Zipcode(10011, "New York", items);
-
 
         // Test positive results
         assertTrue(10011 == zip.getID());

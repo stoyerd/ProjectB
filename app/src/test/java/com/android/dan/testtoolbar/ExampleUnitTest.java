@@ -1,4 +1,4 @@
-package com.android.dan.testtoolbar;
+package com.android.dan.location;
 
 import org.junit.Test;
 
