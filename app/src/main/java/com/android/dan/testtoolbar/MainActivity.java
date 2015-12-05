@@ -23,10 +23,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button addButton;
     private Button deleteButton;
     private Button searchButton;
+    private Button updateButton;
     private EditText mainEditText;
     private ListView mainListView;
     private ArrayAdapter mArrayAdapter;
     private ArrayList mCategoryList = new ArrayList();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setOnClickListener(this);
+
+        updateButton = (Button) findViewById(R.id.update_button);
+        updateButton.setOnClickListener(this);
+        updateButton.setVisibility(View.INVISIBLE);
 
         // 3. Access the EditText defined in layout xml
         mainEditText = (EditText) findViewById(R.id.main_edittext);
@@ -114,9 +120,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             result = findZipcode(v);
             if(result != -1) {
                 mainTextView.setText("We found your zipcode!");
+                updateButton.setVisibility(View.VISIBLE);
             } else {
                 mainTextView.setText("We did not found your zipcode!");
             }
+        }
+
+        if(v == updateButton) {
+            updateButton.setVisibility(View.INVISIBLE);
+            Log.d("Update:", "I have clicked the update button.");
         }
     }
 
