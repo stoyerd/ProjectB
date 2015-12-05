@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * Created by Dan on 12/5/2015.
@@ -31,11 +30,22 @@ public class UnitTest extends InstrumentationTestCase{
 
         Zipcode zip = new Zipcode(10011, "New York", items);
 
+
+        // Test positive results
         assertTrue(10011 == zip.getID());
         assertTrue("New York" == zip.getCity());
+        assertTrue(zip.getStandards().get("glass").contains("beer bottles"));
+        assertTrue(zip.getStandards().get("glass").contains("coke bottles"));
+        assertTrue(zip.getStandards().get("plastic").contains("plastic cups"));
+        assertTrue(zip.getStandards().get("plastic").contains("plastic utensils"));
 
-        zip.getStandards().get("glass");
-        assertTrue(glassItems == zip.getStandards().get("glass"))
+        // Test negative results
+        assertFalse(10022 == zip.getID());
+        assertFalse("New Dork" == zip.getCity());
+        assertFalse(zip.getStandards().containsKey("paper"));
+        assertFalse(zip.getStandards().get("glass").contains("water bottles"));
+        assertFalse(zip.getStandards().get("plastic").contains("glass bottles"));
+
 
     }
 }
