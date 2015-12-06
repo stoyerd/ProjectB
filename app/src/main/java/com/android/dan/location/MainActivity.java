@@ -18,7 +18,10 @@ import android.widget.Toast;
 import com.android.dan.location.objects.Zipcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener {
@@ -30,9 +33,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button searchButton;
 //    private Button updateButton;
     private EditText zipcodeEditText;
+    private EditText cityEditText;
+    private EditText categoryEditText;
+    private EditText product1;
+    private EditText product2;
+    private EditText product3;
     private ListView mainListView;
 //    private ArrayAdapter mArrayAdapter;
-    private ArrayList mCategoryList = new ArrayList();
+//    private ArrayList mCategoryList = new ArrayList();
     protected AlertDialog mAlertDialogCategories;
 
 
@@ -67,12 +75,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.search_button:
                         String zipcode = zipcodeEditText.getText().toString();
-                        mCategoryList.add(zipcode);
-                        int result;
+                        Zipcode result;
                         result = findZipcode(v);
                         //dstoyer TODO get the information for the zipcode and populate showPopUp.
-                        if(result != -1) {
-                            showPopUp("Recyclable Categories");
+                        if(result != null) {
+                            Map<String, List<String>> standards = result.getStandards();
+
+                            Set<String> catSet = standards.keySet();
+
+                            List<String> catList = new ArrayList<>();
+
+                            for(String cat : catSet) {
+                                catList.add(cat);
+                            }
+
+                            showPopUp("Recyclable Categories", catList);
 //                            Toast.makeText(getBaseContext(), "Zipcode "+zipcode+" found!", Toast.LENGTH_SHORT).show();
 //                            updateButton.setVisibility(View.VISIBLE);
                         } else {
@@ -92,17 +109,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 3. Access the EditText defined in layout xml
         zipcodeEditText = (EditText) findViewById(R.id.zip_edittext);
 
-//        // 4. Access the ListView
-//        mainListView = (ListView) findViewById(R.id.listView);
+        cityEditText = (EditText) findViewById(R.id.city_edittext);
 
-        // 5. Create an array adapter for the ListView
-//        mArrayAdapter = new ArrayAdapter(this,
-//                android.R.layout.simple_list_item_1,
-//                mCategoryList
-//        );
-//        // 6. Set the ListView to use the ArrayAdapter
-//        mainListView.setAdapter(mArrayAdapter);
+        categoryEditText = (EditText) findViewById(R.id.category_edit);
 
+        product1 = (EditText) findViewById(R.id.product_edit1);
+        product2 = (EditText) findViewById(R.id.product_edit2);
+        product3 = (EditText) findViewById(R.id.product_edit3);
 
 
     }
@@ -139,8 +152,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Also add that value to the list shown in the ListView
         if(v == addButton) {
             String zipcode = zipcodeEditText.getText().toString();
-            mCategoryList.add(zipcode);
-//            mArrayAdapter.notifyDataSetChanged();
             if (addZipcode(v)) {
                 Toast.makeText(getBaseContext(), "Zipcode "+zipcode+" added.", Toast.LENGTH_SHORT).show();
             }
@@ -150,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(v == deleteButton) {
             String zipcode = zipcodeEditText.getText().toString();
-            mCategoryList.remove(zipcodeEditText.getText().toString());
             if(deleteZipcode(v)) {
                 Toast.makeText(getBaseContext(), "Zipcode "+zipcode+" deleted.", Toast.LENGTH_SHORT).show();
             }
@@ -170,15 +180,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Log the item's position and contents
         // to the console in debug
-        Log.d("ooh android", position + ": " + mCategoryList.get(position));
-
     }
 
     public boolean addZipcode(View view) {
         MySQLiteHelper db = new MySQLiteHelper(this);
         String zipcode = zipcodeEditText.getText().toString();
         if (isValidInteger(zipcode)) {
-            return db.addDummyZipcode(Integer.parseInt(zipcode));
+            String city = cityEditText.getText().toString();
+            if(city.isEmpty()) {
+                city = null;
+            }
+
+
+            String category = ":"+categoryEditText.getText().toString();
+            if(category.length() > 1) {
+                category += ","+product1.getText().toString();
+                category += ","+product2.getText().toString();
+                category += ","+product3.getText().toString();
+            }
+            else {
+                category = null;
+            }
+
+
+            return db.addDummyZipcode(Integer.parseInt(zipcode), city, category);
         }
         // if we made it this far, we could not add the zipcode.
         return false;
@@ -194,26 +219,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
     //dloughlin TODO this will be a Zipcode object return type someotherday
-    public int findZipcode(View view) {
+    public Zipcode findZipcode(View view) {
         MySQLiteHelper db = new MySQLiteHelper(this);
         String zipcode = zipcodeEditText.getText().toString();
         if (isValidInteger(zipcode)) {
             return db.findZipcode(Integer.parseInt(zipcode));
         }
         // if we made it this far, we could not the find zipcode.
-        return -1;
+        return null;
     }
 
-    public void showPopUp(String title){
+    public void showPopUp(String title, List<String> categories){
 
         // add your items, this can be done programatically
         // your items can be from a database
-
-        List<String> categories = new ArrayList<>();
-        categories.add("Plastic");
-        categories.add("Paper");
-        categories.add("Glass");
-        categories.add("Electronics");
 
 
         // our adapter instance

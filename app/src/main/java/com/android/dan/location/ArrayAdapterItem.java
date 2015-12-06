@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Set;
 
 // here's our beautiful adapter
 public class ArrayAdapterItem extends ArrayAdapter<String> {

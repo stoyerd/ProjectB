@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.android.dan.location.objects.Zipcode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,49 +50,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    // We are querying the db using a zipcode and returning
-    // the city and recycling standards.
-    public Zipcode queryZipCode(String zipcodeID) {
-
-        String query = "Select * FROM " + TABLE_STANDARDS + " WHERE " + ZIP_CODE + " = \"" + zipcodeID + "\"";
-
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        Cursor cursor = database.rawQuery(query, null);
-
-        try {
-            // Do we have 1 row
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                // dstoyer TODO We need to parse the standards into the item type and the list of products.
-                // the object needs to be a Map<String, List<String>
-                Map<String, List<String>> standards = new HashMap<>();
-                cursor.getString(2);
-                Zipcode zipcode = new Zipcode(
-                        Integer.parseInt(zipcodeID),
-                        cursor.getString(1),
-                        standards
-                        );
-                cursor.close();
-                return zipcode;
-            } else {
-                //dloughlin(TODO): if not foundm lets display something different to the user
-                return null;
-            }
-        }
-        finally {
-            database.close();
-        }
-    }
-
     /**
      * For seeding a database and testing
      */
-    public boolean addDummyZipcode(int zipcodeID) {
+    public boolean addDummyZipcode(int zipcodeID, String city, String standards) {
         ContentValues values = new ContentValues();
         values.put(ZIP_CODE, zipcodeID);
-        values.put(CITY, "denver");
-        values.put(RECYCLING_STANDARDS, "toxic waste");
+        values.put(CITY, city);
+        values.put(RECYCLING_STANDARDS, standards);
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -127,25 +93,50 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     //dloughlin TODO this will be a Zipcode object return type someotherday
-    public int findZipcode(int zipcodeID) {
+    public Zipcode findZipcode(int zipcodeID) {
         String query = "Select * FROM " + TABLE_STANDARDS + " WHERE "
                 + ZIP_CODE + " = \"" + zipcodeID + "\"";
 
-        int result = -1;
-
         SQLiteDatabase db = this.getWritableDatabase();
+
+        Zipcode result = null;
 
         Cursor cursor = db.rawQuery(query, null);
         //dloughlin TODO instantiate zipcode object here
         if (cursor.moveToFirst()) {
-            // cursor.moveToFirst();
-            // product.setID(Integer.parseInt(cursor.getString(0)));
-            // product.setProductName(cursor.getString(1));
-            // product.setQuantity(Integer.parseInt(cursor.getString(2)));
-            result = cursor.getInt(0);
+
+            // :plastic,coca-cola,pepsi:paper,cardboard,construction,origami:metals
+            // Splits our string into categories, which are colon separated. The category name is the first word in each
+            // index. The words in each index are comma seperated
+            String standards = cursor.getString(2);
+
+            Map<String, List<String>> map = new HashMap<String, List<String>>();
+
+            List<String> products;
+
+            String[] standardsArray = standards.split(":");
+            // iterate over each category in the array.
+            for(String cat : standardsArray) {
+                String[] catArray = cat.split(",");
+                String key = null;
+                products = new ArrayList<>();
+                for (String name: catArray) {
+                    // the first name is the category name (key), the rest are placed in the list
+                    if(null == key) {
+                        key = name;
+                    }
+                    else {
+                        products.add(name);
+                    }
+                }
+                map.put(key, products);
+            }
+
+            result = new Zipcode(cursor.getInt(0), cursor.getString(1), map);
+
             cursor.close();
         } else {
-            // product = null;
+            return null;
         }
         db.close();
         return result;
@@ -155,12 +146,3 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     // dstoyer TODO make method for parsing the standards. The object needs to be a Map<String, List<String>
 
 }
-
-// List<String> sp
-// sp.add(product);
-
-// save key name in variable
-// build list
-// put in the map.
-
-// map.put(key, sp)
