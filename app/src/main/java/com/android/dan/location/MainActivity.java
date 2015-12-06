@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deleteButton.setOnClickListener(this);
 
         searchButton = (Button) findViewById(R.id.search_button);
+
         // a button to show the pop up with a list view
         View.OnClickListener handler = new View.OnClickListener(){
             public void onClick(View v) {

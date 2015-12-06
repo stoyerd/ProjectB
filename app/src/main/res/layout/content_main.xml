@@ -21,10 +21,37 @@
         android:layout_alignParentTop="true"/>
 
     <LinearLayout
-        android:id="@+id/interact_layout"
+        android:id="@+id/process_layout"
+        android:layout_below="@id/main_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/main_textview"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <TextView android:text="@string/process"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtContent"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Process"
+            android:id="@+id/scanButton"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgview"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/interact_layout"
+        android:layout_below="@+id/process_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal">
         <!-- Set onClickListener to trigger results when pressed -->
 
@@ -32,7 +59,7 @@
             android:id="@+id/add_button"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="5dp"
             android:text="@string/add_button"/>
 
@@ -40,7 +67,7 @@
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="5dp"
             android:text="@string/delete_button"/>
 
@@ -48,7 +75,7 @@
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="5dp"
             android:text="@string/search_button"/>
 

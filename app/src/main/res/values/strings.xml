@@ -14,4 +14,5 @@
     <string name="zip_hint">Enter Zipcode</string>
     <string name="product_text">Recyclable Products in Category</string>
     <string name="product_hint">Enter product name</string>
+    <string name="process">Process Bar Code</string>
 </resources>
