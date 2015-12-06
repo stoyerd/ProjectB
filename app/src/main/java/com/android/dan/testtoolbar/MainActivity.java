@@ -65,17 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 5. Set this activity to react to list items being pressed.
         mainListView.setOnItemClickListener(this);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.action_manual_upc);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Manu", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
-// dloughlin test 4
-    // Dan Stoyer comment another test
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -93,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_manual_upc) {
+        } else if (id == R.id.action_manual_upc) {              // Selected manual UPC code search.
             Log.v("Clicked: ", + R.id.action_manual_upc + " option.");
             Intent intent = new Intent(this, ManualUpcSearch.class);
             startActivity(intent);
