@@ -1,4 +1,4 @@
-package com.android.dan.location.zipcode;
+package com.android.dan.location.objects;
 
 import java.util.List;
 import java.util.Map;

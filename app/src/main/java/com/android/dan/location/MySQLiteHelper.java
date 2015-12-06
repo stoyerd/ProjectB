@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.android.dan.location.zipcode.Zipcode;
+import com.android.dan.location.objects.Zipcode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,19 +84,28 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    // For seeding a database and testing
-    public void addDummyZipcode(int zipcodeID) {
+    /**
+     * For seeding a database and testing
+     */
+    public boolean addDummyZipcode(int zipcodeID) {
         ContentValues values = new ContentValues();
         values.put(ZIP_CODE, zipcodeID);
         values.put(CITY, "denver");
         values.put(RECYCLING_STANDARDS, "toxic waste");
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TABLE_STANDARDS, null, values);
-        db.close();
-    }
 
-    // For deleting a zipcode from database and testing
+        boolean result = false;
+        if (-1 != db.insert(TABLE_STANDARDS, null, values)) {
+            result = true;
+        }
+        db.close();
+
+        return result;
+    }
+    /**
+     * For deleting a zipcode from database and testing
+     */
     public boolean deleteDummyZipcode(int zipcodeID) {
         boolean result = false;
         String query = "Select * FROM " + TABLE_STANDARDS + " WHERE "

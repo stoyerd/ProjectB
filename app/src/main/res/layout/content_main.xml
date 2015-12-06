@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:text="@string/textview"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/main_edittext" />
+        android:layout_alignParentTop="true"/>
 
     <LinearLayout
         android:id="@+id/interact_layout"
@@ -28,14 +27,6 @@
         android:layout_below="@+id/main_textview"
         android:orientation="horizontal">
         <!-- Set onClickListener to trigger results when pressed -->
-        <EditText
-            android:id="@+id/main_edittext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:hint="@string/zip_hint"
-            android:layout_weight="1" />
 
         <Button
             android:id="@+id/add_button"
@@ -62,11 +53,42 @@
             android:text="@string/search_button"/>
 
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/city_layout"
+        android:id="@+id/zip_layout"
+        android:layout_below="@+id/interact_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/interact_layout"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/zip_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:text="@string/zip_text"
+            android:layout_alignParentTop="false"
+            android:layout_alignStart="@+id/add_button" />
+
+        <EditText
+            android:id="@+id/zip_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:hint="@string/zip_hint"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/city_edit"
+        android:layout_below="@+id/zip_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="horizontal">
 
@@ -78,7 +100,7 @@
             android:textSize="20dp"
             android:text="@string/city_text"
             android:layout_alignParentTop="false"
-            android:layout_alignStart="@+id/main_edittext" />
+            android:layout_alignStart="@+id/zip_edittext" />
 
         <EditText
             android:id="@+id/city_edittext"
@@ -90,29 +112,97 @@
             android:hint="@string/city_hint"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/update_button"
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/category_layout"
+        android:layout_below="@id/city_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/category_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:text="@string/cat_text"
+            android:layout_alignParentTop="false"
+            android:layout_alignStart="@+id/zip_edittext" />
+
+        <EditText
+            android:id="@+id/category_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="5dp"
-            android:text="@string/update_button"/>
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:hint="@string/cat_hint"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@id/list_layout"
-        android:layout_below="@id/city_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="350dp"
-        android:layout_marginLeft="2dp">
-    <ListView
-        android:id="@+id/listView"
-        android:layout_below="@+id/city_layout"
+        android:id="@+id/product_layout"
+        android:layout_below="@id/category_layout"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:descendantFocusability="beforeDescendants"
-        android:layout_alignParentStart="true"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/product_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:textSize="20dp"
+            android:text="@string/product_text"
+            android:layout_alignParentTop="false"
+            android:layout_alignStart="@+id/add_button" />
+
+        <EditText
+            android:id="@+id/product_edit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:hint="@string/product_hint"
+            android:layout_weight="1" />
+        <EditText
+            android:id="@+id/product_edit2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:hint="@string/product_hint"
+            android:layout_weight="1" />
+        <EditText
+            android:id="@+id/product_edit3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:hint="@string/product_hint"
+            android:layout_weight="1" />
+
     </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/list_layout"-->
+        <!--android:layout_below="@id/city_layout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="350dp"-->
+        <!--android:layout_marginLeft="2dp">-->
+    <!--<ListView-->
+        <!--android:id="@+id/listView"-->
+        <!--android:layout_below="@+id/city_layout"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:descendantFocusability="beforeDescendants"-->
+        <!--android:layout_alignParentStart="true"/>-->
+    <!--</LinearLayout>-->
 
 </RelativeLayout>

@@ -2,7 +2,7 @@ package com.android.dan.location.test;
 
 import android.test.InstrumentationTestCase;
 
-import com.android.dan.location.zipcode.Zipcode;
+import com.android.dan.location.objects.Zipcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
